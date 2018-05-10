@@ -1,12 +1,14 @@
 // BIDMC ITS: Who Am I for Field and Support teams
 //
+// 10-May-2018 rhurst
+// staging milestone: v1.1.0
 // 03-May-2018 rhurst
 // IC "new & deploy" workflow
 // 19-Apr-2018 rhurst
 // draft
 
-//const CROSBY = 'https://cassiopeia.bidmc.harvard.edu/crosby/'
-const CROSBY = 'https://rhurst-laptop.bidmc.harvard.edu:3333/crosby/'
+//const CROSBY = 'https://rhurst-laptop.bidmc.harvard.edu:3333/crosby/'
+const CROSBY = 'https://cassiopeia.bidmc.harvard.edu/crosby/'
 
 let info = document.getElementById("info");
 let tech = document.getElementById("tech");

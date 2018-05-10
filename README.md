@@ -5,8 +5,9 @@ It also provides a simplified [G Suite Admin](https://admin.google.com) (Google 
 
 There may be need / opportunity to expand this extension to include device registration with our standalone Electronic Health Record, [webOMR](https://apps.bidmc.org/webomr_training/), for printing and flag tasks (aka **ZO**).
 
+See also: [BIDMC ITS: CrOSby](https://github.com/theflyingape/bidmc-its-crosby) APIs optionally used by this extension.
+
 ## Google Chrome APIs
-* [Admin Directory](https://developers.google.com/apis-explorer/?hl=en_US#search/directory/admin/directory_v1/) using [Google APIs client](https://www.npmjs.com/package/googleapis)* for Node.js
 * [Window](https://developer.chrome.com/apps/app.window.html)
 * [Runtime](https://developer.chrome.com/apps/app.runtime.html)
 * [CPU](https://developer.chrome.com/apps/system_cpu.html)
@@ -14,8 +15,6 @@ There may be need / opportunity to expand this extension to include device regis
 * [Memory](https://developer.chrome.com/apps/system_memory.html)
 * [Network](https://developer.chrome.com/apps/system_network.html)
 * [Storage](https://developer.chrome.com/apps/system_storage.html)
-
-[*] watching [issue #1157]()
 
 ## Screenshot
 ![screenshot](./assets/screenshot.png)
