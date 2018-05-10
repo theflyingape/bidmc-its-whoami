@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>&#x1F3E5; BIDMC ITS: Who Am I</title>
+<style>
+  html, body {
+    height: 100%;
+  }
+  body {
+    background: linear-gradient(to bottom right, lightgoldenrodyellow, gold);
+    font-family: Consolas, 'Lucida Console', monospace;
+    font-size: 90%;
+    color: black;
+    border: none;
+    margin: 0 auto;
+    overflow: scroll;
+  }
+/*
+    http://divtable.com/table-styler/
+*/
+  table {
+    margin: 0px auto;
+  }
+  table.info {
+    background-color: #F3E3C6;
+    border: 3px solid #948473;
+    border-collapse: collapse;
+    padding: 1px 3px;
+    text-align: center;
+  }
+  table.info thead {
+    background: #948473;
+    background: -moz-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+    background: -webkit-linear-gradient(top, #afa396 0%, #9e9081 66%, #948473 100%);
+    background: linear-gradient(to bottom, #afa396 0%, #9e9081 66%, #948473 100%);
+    font-size: larger;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+  }
+  table.info th {
+    border: 1px solid #948473;
+    border-left: 1px solid #948473;
+    font-weight: bold;
+    color: darkslategray;
+    text-align: center;
+  }
+  table.info td {
+    border-left: 1px solid #948473;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+<img src="./assets/BIDMC.png" width="50%" style="float:left; margin:4px 20px 4px 20px; border:none;">
+<pre style="font-size:large;">
+
+|
+|  Please use this tool when calling
+|  IS Support Center at 4-8080
+| 
+</pre></span>
+<hr style="clear: both;">
+<div id="info">
+<table>
+  <tr style="vertical-align:top;"><td>
+  <table id="network-table" class="info">
+    <thead><tr><td colspan=2>Networking Information</td></tr></thead>
+    <tr><th>Name</th><th>Address</th></tr>
+  </table></td>
+  <td><table id="storage-table" class="info">
+    <thead><tr><td colspan="3">Storage Information</td></tr></thead>
+    <tr><th>ID</th><th>Type</th><th>Capacity</th></tr>
+  </table></td>
+  <td><table id="memory-table" class="info">
+    <thead><tr><td colspan=2>Memory Information</td></tr></thead>
+    <tr><th>Available</th><th>Total</th></tr>
+    <tr><td>--</td><td>--</td></tr>
+  </table>
+  </td></tr>
+  <tr><td colspan="3">
+  <table id="cpu-table" class="info">
+      <thead><tr><td colspan=5>CPU Information</td></tr></thead>
+      <tr><td colspan=5>--</td></tr>
+      <tr>
+        <th>CPU #</th>
+        <th>Idle (ms)</th>
+        <th>Kernel (ms)</th>
+        <th>User (ms)</th>
+        <th>Total (ms)</th>
+      </tr>
+    </table>
+  </td></tr>
+  <tr><td colspan="3">
+    <table id="display-table" class="info">
+      <thead><tr><td colspan=8>Display Information</td></tr></thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Mirroring Source</th>
+        <th>Primary</th>
+        <th>Internal</th>
+        <th>Enabled</th>
+        <th>Work Area</th>
+        <th>DPI X:Y</th>
+      </tr>
+    </table>
+  </td></tr>
+</table>
+</div>
+<!--
+  ITS support teams
+-->
+<div id="tech" style='text-align: right;' hidden>
+<p style="border-style: double; text-align: center;">
+  This application section allows only authorized personnel use.<br>
+  Any unauthorized attempts are logged and monitored.
+</p>
+<form id="authorize">
+  <input type="text" placeholder="Enter ID" name="id" autofocus required>
+  <input type="password" placeholder="Enter password" name="password" required>
+  <button type="submit"> Authorize </button>
+</form>
+  <div id="work" style='text-align: center;' hidden>
+  <hr>
+  <p id="device" style="border-style: single; text-align: center;">-missing-</p>
+  <label for="key">Device ID:</label><input type="text" style="color:blue;" name="key" size=36><input type="image" src="assets/query.png" width="24" height="24" align="absmiddle" id="keyButton">
+  <label for="orgUnitPath">OU:</label><input type="text" name="orgUnitPath" readonly size=36>
+  <br>
+  <label for="model">Model:</label><input type="text" name="model" readonly size=50>
+  <label for="serialNumber">S/N:</label><input type="text" style="color:blue;" name="serialNumber" size=20><input type="image" src="assets/query.png" width="24" height="24" align="absmiddle" id="serialNumberButton">
+  <br>
+  <label for="macAddress">MAC:</label><input type="text" style="color:blue;" name="macAddress" size=12><input type="image" src="assets/query.png" width="24" height="24" align="absmiddle" id="macAddressButton">
+  <label for="osVersion">OS:</label><input type="text" name="osVersion" readonly size=15>
+  <br>
+  <label for="annotatedAssetId"><b>Asset ID:</b></label><input type="text" style="color:blue;" name="annotatedAssetId" size=16><input type="image" src="assets/query.png" width="24" height="24" align="absmiddle" id="assetIdButton">
+  <label for="annotatedLocation"><b>Location:</b></label><input type="text" name="annotatedLocation" size=40>
+  <br>
+  <form id="patch">
+      <label for="annotatedUser"><b>User:</b></label><input type="text" name="annotatedUser" size=50>
+      <button type="submit" id="patchButton" disabled>PATCH</button>
+  </form>
+  <p><b>- Notes -</b><br><textarea rows=3 cols=80 name="notes"></textarea></p>
+  <form id="moveTo">
+      <label for="toOU">New OU:</label><select id="toOU"></select> <button type="submit" id ="moveButton" disabled>MOVE</button>
+  </form>
+  </div>
+</div>
+<hr>
+<div>
+  <span style='float:left; font-size:medium; color: rebeccapurple'>
+    <label id="deviceId">-deviceId-</label>
+  </span>
+  <span style='float:right; font-size:small; color:slategray'>
+    <label for="FieldSupport">IS Field Support technician only</label>
+    <input type="checkbox" id="FieldSupport" name="technician" value=false>
+  </span>
+</div>
+</body>
+<script src="whoami.js"></script>
+<script src="support.js"></script>
+</html>

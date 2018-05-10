@@ -1,0 +1,29 @@
+{
+ "name": "BIDMC ITS: Who Am I",
+ "short_name": "Who Am I",
+ "version": "1.0.9",
+ "content_security_policy": "script-src 'self' rhurst-laptop.bidmc.harvard.edu;",
+ "permissions": [
+   "enterprise.deviceAttributes",
+   "fileSystem",
+   "https://*.bidmc.harvard.edu/",
+   "http://rhurst-laptop.bidmc.harvard.edu:3333/",
+   "system.cpu",
+   "system.display",
+   "system.memory",
+   "system.network",
+   "system.storage"
+  ],
+ "minimum_chrome_version": "59",
+ "manifest_version": 2,
+ "description": "BIDMC ITS Desktop Configuration app",
+ "app": {
+   "background": {
+     "scripts": ["main.js"]
+   }
+ },
+ "author": "Robert Hurst <rhurst@bidmc.harvard.edu>",
+ "icons": {
+   "128": "assets/icon.png"
+  }
+}
