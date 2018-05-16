@@ -9,6 +9,8 @@
 
 //const CROSBY = 'https://rhurst-laptop.bidmc.harvard.edu:3333/crosby/'
 const CROSBY = 'https://cassiopeia.bidmc.harvard.edu/crosby/'
+let headers = new Headers();
+//headers.append('Content-Type', 'application/json');
 
 let info = document.getElementById("info");
 let tech = document.getElementById("tech");
@@ -38,9 +40,37 @@ function toggleUI()
 	tech.hidden = !info.hidden;
 }
 
+function fail() {
+	console.log('fail');
+	let status = document.getElementById("status");
+	status.src = 'assets/red_light.png';
+	loadAsset({});
+	work.hidden = true;
+	headers = new Headers();
+	document.getElementsByName('id')[0].value = '';
+	document.getElementsByName('password')[0].value = '';
+}
+
+function light(ok) {
+	console.log(ok);
+	let logon = document.getElementById("logon");
+	let status = document.getElementById("status");
+	if (ok) {
+		logon.disabled = true;
+		status.src = 'assets/green_light.png';
+		work.hidden = false;
+	}
+	else {
+		status.src = 'assets/yellow_light.png';
+		loadAsset({});
+	}
+}
+
 function authorize()
 {
-	work.hidden = false;
+	let username = document.getElementsByName('id')[0].value;
+	let password = document.getElementsByName('password')[0].value;
+	headers.append('Authorization', 'Basic ' + btoa(username + ":" + password));
 	loadOU();
 
 	let device = document.getElementById('device');
@@ -49,11 +79,12 @@ function authorize()
 			device.innerText = 'Chrome managed device ID: ';
 			device.innerText += deviceId || '(empty)';
 			if (deviceId) {
-				fetch(`${CROSBY}device/?id=${deviceId}`, { method: 'GET', mode: 'cors' }).then(function (res) {
+				fetch(`${CROSBY}device/?id=${deviceId}`, { method: 'GET', headers: headers, mode: 'cors' }).then(function (res) {
+					light(res.ok);
 					return res.json().then(function (data) {
 						loadAsset(data);
 					})
-				})
+				}).catch(function (err) { fail(); })
 			}
 		});
 	}
@@ -82,7 +113,8 @@ function authorize()
 function loadOU() {
 	//let watch: HTMLOptionsCollection = <any>el
 	let el = document.getElementById('toOU');
-	fetch(`${CROSBY}ou/`, { method: 'GET', mode: 'cors' }).then(function (res) {
+	fetch(`${CROSBY}ou/`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
+		light(res.ok);
 		return res.json().then(function (data) {
 			for (let i in data) {
 				let option = document.createElement("option");
@@ -92,7 +124,7 @@ function loadOU() {
 			}
 			el.selectedIndex = -1;
 		})
-	})
+	}).catch(function (err) { fail(); })
 }
 
 function loadAsset(data) {
@@ -119,44 +151,49 @@ function loadAsset(data) {
 function findAssetBydeviceId() {
 	let deviceId = document.getElementsByName("key")[0].value;
 	if (deviceId) {
-		fetch(`${CROSBY}device/?id=${deviceId}`, { method: 'GET', mode: 'cors' }).then(function (res) {
+		fetch(`${CROSBY}device/?id=${deviceId}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
+			light(res.ok);
 			return res.json().then(function (data) {
 				loadAsset(data);
 			})
-		})
+		}).catch(function (err) { fail(); })
 	}
 }
 
+//	http://support.google.com/chromeos/a/bin/answer.py?hl=en&answer=1698333
 function findAssetByserialNumber() {
 	let serialNumber = document.getElementsByName("serialNumber")[0].value;
 	if (serialNumber) {
-		fetch(`${CROSBY}devices/?id=${serialNumber}`, { method: 'GET', mode: 'cors' }).then(function (res) {
+		fetch(`${CROSBY}devices/?id=${serialNumber}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
+			light(res.ok);
 			return res.json().then(function (data) {
 				loadAsset(data);
 			})
-		})
+		}).catch(function (err) { fail(); })
 	}
 }
 
 function findAssetBymacAddress() {
 	let macAddress = document.getElementsByName("macAddress")[0].value.replace(/:/g,'');
 	if (macAddress) {
-		fetch(`${CROSBY}devices/?wifi_mac=${macAddress}`, { method: 'GET', mode: 'cors' }).then(function (res) {
+		fetch(`${CROSBY}devices/?wifi_mac=${macAddress}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
+			light(res.ok);
 			return res.json().then(function (data) {
 				loadAsset(data);
 			})
-		})
+		}).catch(function (err) { fail(); })
 	}
 }
 
 function findAssetByannotatedAssetId() {
 	let annotatedAssetId = document.getElementsByName("annotatedAssetId")[0].value;
 	if (annotatedAssetId) {
-		fetch(`${CROSBY}devices/?asset_id=${annotatedAssetId}`, { method: 'GET', mode: 'cors' }).then(function (res) {
+		fetch(`${CROSBY}devices/?asset_id=${annotatedAssetId}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
+			light(res.ok);
 			return res.json().then(function (data) {
 				loadAsset(data);
 			})
-		})
+		}).catch(function (err) { fail(); })
 	}
 }
 
@@ -165,11 +202,12 @@ function moveTo() {
 	let el = document.getElementById('toOU');
 	let ou = el[el.selectedIndex].text;	//	.value "fails" if it has a leading "0", go figure
 	if (deviceId && ou) {
-		fetch(`${CROSBY}move/?id=${deviceId}&ou=${ou}`, { method: 'POST', mode: 'cors' }).then(function (res) {
+		fetch(`${CROSBY}move/?id=${deviceId}&ou=${ou}`, { method: 'POST', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
+			light(res.ok);
 			return res.json().then(function (data) {
 				findAssetBydeviceId();
 			})
-		})
+		}).catch(function (err) { fail(); })
 	}
 }
 
@@ -181,10 +219,11 @@ function patch() {
 	let notes = document.getElementsByName('notes')[0].value;
 	if (deviceId) {
 		fetch(`${CROSBY}patch/?id=${deviceId}&annotatedAssetId=${annotatedAssetId}&annotatedLocation=${annotatedLocation}&annotatedUser=${annotatedUser}&notes=${notes}`,
-		{ method: 'POST', mode: 'cors' }).then(function (res) {
+		{ method: 'POST', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
+			light(res.ok);
 			return res.json().then(function (data) {
 				findAssetBydeviceId();
 			})
-		})
+		}).catch(function (err) { fail(); })
 	}
 }
