@@ -16,5 +16,6 @@ See also: [BIDMC ITS: CrOSby](https://github.com/theflyingape/bidmc-its-crosby) 
 * [Network](https://developer.chrome.com/apps/system_network.html)
 * [Storage](https://developer.chrome.com/apps/system_storage.html)
 
-## Screenshot
+## Screenshots
 ![screenshot](./assets/screenshot.png)
+![screenshot](./assets/screenshot2.png)

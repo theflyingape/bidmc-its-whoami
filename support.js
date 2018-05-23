@@ -13,8 +13,9 @@ let headers = new Headers();
 //headers.append('Content-Type', 'application/json');
 
 let info = document.getElementById("info");
-let tech = document.getElementById("tech");
+let status = document.getElementById("status");
 let work = document.getElementById("work");
+let tech = document.getElementById("tech");
 
 document.getElementById("FieldSupport").addEventListener("change", toggleUI);
 document.getElementById("authorize").addEventListener("submit", authorize);
@@ -38,14 +39,22 @@ function toggleUI()
 	info.hidden = !info.hidden;
 	work.hidden = info.hidden;
 	tech.hidden = !info.hidden;
+	fail();
+}
+
+function wait() {
+	document.body.style.cursor = 'wait';
+	status.src = 'assets/yellow_light.png';
 }
 
 function fail() {
 	console.log('fail');
-	let status = document.getElementById("status");
-	status.src = 'assets/red_light.png';
+	document.body.style.cursor = '';
 	loadAsset({});
 	work.hidden = true;
+	let logon = document.getElementById("logon");
+	logon.disabled = false;
+	status.src = 'assets/red_light.png';
 	headers = new Headers();
 	document.getElementsByName('id')[0].value = '';
 	document.getElementsByName('password')[0].value = '';
@@ -53,8 +62,8 @@ function fail() {
 
 function light(ok) {
 	console.log(ok);
+	document.body.style.cursor = '';
 	let logon = document.getElementById("logon");
-	let status = document.getElementById("status");
 	if (ok) {
 		logon.disabled = true;
 		status.src = 'assets/green_light.png';
@@ -76,12 +85,13 @@ function authorize()
 	let device = document.getElementById('device');
 	if (chrome.enterprise) {
 		chrome.enterprise.deviceAttributes.getDirectoryDeviceId(deviceId => {
-			device.innerText = 'Chrome managed device ID: ';
-			device.innerText += deviceId || '(empty)';
+			device.innerText = 'Chrome Enterprise enrollment: ';
+			device.innerText += deviceId || '(null)';
 			if (deviceId) {
 				fetch(`${CROSBY}device/?id=${deviceId}`, { method: 'GET', headers: headers, mode: 'cors' }).then(function (res) {
 					light(res.ok);
 					return res.json().then(function (data) {
+						device.innerText += ' ' + (data.status || 'unknown');
 						loadAsset(data);
 					})
 				}).catch(function (err) { fail(); })
@@ -113,6 +123,7 @@ function authorize()
 function loadOU() {
 	//let watch: HTMLOptionsCollection = <any>el
 	let el = document.getElementById('toOU');
+	wait();
 	fetch(`${CROSBY}ou/`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 		light(res.ok);
 		return res.json().then(function (data) {
@@ -151,8 +162,10 @@ function loadAsset(data) {
 function findAssetBydeviceId() {
 	let deviceId = document.getElementsByName("key")[0].value;
 	if (deviceId) {
+		wait();
 		fetch(`${CROSBY}device/?id=${deviceId}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
+			loadAsset(res.json);
 			return res.json().then(function (data) {
 				loadAsset(data);
 			})
@@ -164,6 +177,7 @@ function findAssetBydeviceId() {
 function findAssetByserialNumber() {
 	let serialNumber = document.getElementsByName("serialNumber")[0].value;
 	if (serialNumber) {
+		wait();
 		fetch(`${CROSBY}devices/?id=${serialNumber}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
 			return res.json().then(function (data) {
@@ -176,6 +190,7 @@ function findAssetByserialNumber() {
 function findAssetBymacAddress() {
 	let macAddress = document.getElementsByName("macAddress")[0].value.replace(/:/g,'');
 	if (macAddress) {
+		wait();
 		fetch(`${CROSBY}devices/?wifi_mac=${macAddress}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
 			return res.json().then(function (data) {
@@ -188,6 +203,7 @@ function findAssetBymacAddress() {
 function findAssetByannotatedAssetId() {
 	let annotatedAssetId = document.getElementsByName("annotatedAssetId")[0].value;
 	if (annotatedAssetId) {
+		wait();
 		fetch(`${CROSBY}devices/?asset_id=${annotatedAssetId}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
 			return res.json().then(function (data) {
@@ -202,11 +218,10 @@ function moveTo() {
 	let el = document.getElementById('toOU');
 	let ou = el[el.selectedIndex].text;	//	.value "fails" if it has a leading "0", go figure
 	if (deviceId && ou) {
+		wait();
 		fetch(`${CROSBY}move/?id=${deviceId}&ou=${ou}`, { method: 'POST', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
-			return res.json().then(function (data) {
-				findAssetBydeviceId();
-			})
+			findAssetBydeviceId();
 		}).catch(function (err) { fail(); })
 	}
 }
@@ -218,6 +233,7 @@ function patch() {
 	let annotatedUser = document.getElementsByName('annotatedUser')[0].value;
 	let notes = document.getElementsByName('notes')[0].value;
 	if (deviceId) {
+		wait();
 		fetch(`${CROSBY}patch/?id=${deviceId}&annotatedAssetId=${annotatedAssetId}&annotatedLocation=${annotatedLocation}&annotatedUser=${annotatedUser}&notes=${notes}`,
 		{ method: 'POST', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
