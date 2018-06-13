@@ -19,3 +19,6 @@ See also: [BIDMC ITS: CrOSby](https://github.com/theflyingape/bidmc-its-crosby) 
 ## Screenshots
 ![screenshot](./assets/screenshot.png)
 ![screenshot](./assets/screenshot2.png)
+
+## Play Store
+This is a [private extension](https://chrome.google.com/webstore/detail/njjibjhkpfiaeggeapoahigncabpcbap) and only fully functional within our network.
