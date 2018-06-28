@@ -1,5 +1,7 @@
 // BIDMC ITS: Who Am I for Field and Support teams
 //
+// 28-Jun-2018 rhurst
+// AWS hosting: v1.1.4
 // 10-May-2018 rhurst
 // staging milestone: v1.1.0
 // 03-May-2018 rhurst
