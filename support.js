@@ -45,6 +45,7 @@ function toggleUI()
 
 function wait() {
 	document.body.style.cursor = 'wait';
+	status.title = `waiting on ${CROSBY} reply`;
 	status.src = 'assets/yellow_light.png';
 }
 
@@ -56,9 +57,12 @@ function fail() {
 	let logon = document.getElementById("logon");
 	logon.disabled = false;
 	status.src = 'assets/red_light.png';
+	status.title = `NOT connected to ${CROSBY}`;
 	headers = new Headers();
-	document.getElementsByName('id')[0].value = '';
 	document.getElementsByName('password')[0].value = '';
+	let id = document.getElementsByName('id')[0];
+	id.value = '';
+	id.focus();
 }
 
 function light(ok) {
@@ -68,10 +72,12 @@ function light(ok) {
 	if (ok) {
 		logon.disabled = true;
 		status.src = 'assets/green_light.png';
+		status.title = `connected to ${CROSBY}`;
 		work.hidden = false;
 	}
 	else {
 		status.src = 'assets/yellow_light.png';
+		status.title = '';
 		loadAsset({});
 	}
 }
@@ -189,7 +195,7 @@ function findAssetByserialNumber() {
 }
 
 function findAssetBymacAddress() {
-	let macAddress = document.getElementsByName("macAddress")[0].value.replace(/:/g,'');
+	let macAddress = document.getElementsByName("macAddress")[0].value.replace(/:/g,'').toLowerCase();
 	if (macAddress) {
 		wait();
 		fetch(`${CROSBY}devices/?wifi_mac=${macAddress}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
