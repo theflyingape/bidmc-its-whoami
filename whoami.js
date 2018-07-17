@@ -37,7 +37,7 @@ function init() {
     if (chrome.enterprise) {
       chrome.enterprise.deviceAttributes.getDirectoryDeviceId(deviceId => {
         device.innerText = 'Chrome device ID: ';
-        device.innerText += deviceId || '(public session)';
+        device.innerText += deviceId || '(BYOD - G Suite user)';
       });
     }
     else {

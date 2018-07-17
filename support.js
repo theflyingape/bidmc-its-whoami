@@ -95,7 +95,7 @@ function authorize()
 	if (chrome.enterprise) {
 		chrome.enterprise.deviceAttributes.getDirectoryDeviceId(deviceId => {
 			device.innerText = 'Chrome Enterprise enrollment: ';
-			device.innerText += deviceId || '(null)';
+			device.innerText += deviceId || 'n/a';
 			if (deviceId) {
 				fetch(`${CROSBY}device/?id=${deviceId}`, { method: 'GET', headers: headers, mode: 'cors' }).then(function (res) {
 					light(res.ok);
@@ -128,7 +128,6 @@ function authorize()
 	*/
 }
 
-// TODO: headers: { Authorization: 'Basic ' + Buffer.from(username + ':' + password).toString('base64') },
 function loadOU() {
 	//let watch: HTMLOptionsCollection = <any>el
 	let el = document.getElementById('toOU');
