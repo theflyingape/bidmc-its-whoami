@@ -121,7 +121,7 @@
     <input type="text" placeholder="Enter ID" name="id" autofocus required>
     <input type="password" placeholder="Enter password" name="password" required>
     <button type="submit"> Authorize </button>
-    <img src="assets/yellow_light.png" width="24" height="24" align="absmiddle" id="status">
+    <img src="assets/yellow_light.png" width="24" height="24" align="absmiddle" id="status" title="use ITS credentials in AD-Add Workstation to Domain group">
     </fieldset>
   </form>
  <div id="work" style='text-align: center;' hidden>
@@ -132,20 +132,21 @@
   <label for="model">Model:</label><input type="text" name="model" readonly size=50>
   <label for="serialNumber">S/N:</label><input type="text" style="color:blue;" name="serialNumber" size=20><input type="image" src="assets/query.png" width="24" height="24" align="absmiddle" id="serialNumberButton" title="search by hardware serial number">
   <br>
-  <label for="macAddress">MAC:</label><input type="text" style="color:blue;" name="macAddress" size=12><input type="image" src="assets/query.png" width="24" height="24" align="absmiddle" id="macAddressButton" title="search by MAC hardware address">
+  <label for="nicAddress">NIC:</label><input type="text" style="color:blue;" name="nicAddress" size=12><input type="image" src="assets/query.png" width="24" height="24" align="absmiddle" id="nicAddressButton" title="search by Ethernet hardware">
+  <label for="wifiAddress">Wifi:</label><input type="text" style="color:blue;" name="wifiAddress" size=12><input type="image" src="assets/query.png" width="24" height="24" align="absmiddle" id="wifiAddressButton" title="search by Wireless hardware">
   <label for="osVersion">OS:</label><input type="text" name="osVersion" readonly size=15>
-  <br>
-  <label for="annotatedAssetId"><b>Asset ID:</b></label><input type="text" style="color:blue;" name="annotatedAssetId" size=16><input type="image" src="assets/query.png" width="24" height="24" align="absmiddle" id="assetIdButton" title="search by our assigned hostname">
-  <label for="annotatedLocation"><b>Location:</b></label><input type="text" name="annotatedLocation" size=40>
   <br>
   <form id="patch">
       <label for="annotatedUser"><b>User:</b></label><input type="text" name="annotatedUser" size=50>
+      <label for="annotatedLocation"><b>Location:</b></label><input type="text" name="annotatedLocation" size=31>
       <button type="submit" id="patchButton" disabled>PATCH</button>
   </form>
   <p><b>- Notes -</b><br><textarea rows=3 cols=80 name="notes"></textarea></p>
   <form id="moveTo">
       <label for="toOU">New OU:</label><select id="toOU"></select> <button type="submit" id ="moveButton" disabled>MOVE</button>
-  </form>
+      <br>
+      <label for="annotatedAssetId">Asset ID (DHCP hostname):</label><input type="text" style="color:blue;" name="annotatedAssetId" size=31><input type="image" src="assets/query.png" width="32" height="24" align="absmiddle" id="assetIdButton" title="search by our assigned hostname"> <label name="reboot" style="color:red;" hidden><b>* reboot required</b></label>
+      </form>
   </div>
 </div>
 <hr>
