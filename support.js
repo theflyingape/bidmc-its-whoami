@@ -182,7 +182,7 @@ function loadAsset(data) {
 	document.getElementsByName('orgUnitPath')[0].value = data.orgUnitPath || '';
 	document.getElementsByName('model')[0].value = data.model || '';
 	document.getElementsByName('serialNumber')[0].value = data.serialNumber || '';
-	document.getElementsByName('nicAddress')[0].value = data.ethernetAddress || '';
+	document.getElementsByName('nicAddress')[0].value = data.ethernetMacAddress || '';
 	document.getElementsByName('wifiAddress')[0].value = data.macAddress || '';
 	document.getElementsByName('osVersion')[0].value = data.osVersion || '';
 	document.getElementsByName('annotatedLocation')[0].value = data.annotatedLocation || '';
@@ -320,13 +320,14 @@ function namingConvention() {
 		let keys = Object.keys(gcbyou).sort();
 		let key = ''
 		keys.forEach(k => {
-			if (ou.startsWith(k)) key = k
+			if (ou.startsWith(k)) key = gcbyou[k]
 		});
+console.log(key, nic, wifi);
 		if (key) {
 			if (key.nic < key.wifi)
-				result = gcbyou[key].prefix + (nic || wifi);
+				result = key.prefix + (nic || wifi)
 			else
-				result = gcbyou[key].prefix + (wifi || nic);
+				result = key.prefix + (wifi || nic)
 		}
 	}
 
