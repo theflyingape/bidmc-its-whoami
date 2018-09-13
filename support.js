@@ -322,12 +322,13 @@ function namingConvention() {
 		keys.forEach(k => {
 			if (ou.startsWith(k)) key = gcbyou[k]
 		});
-console.log(key, nic, wifi);
 		if (key) {
 			if (key.nic < key.wifi)
 				result = key.prefix + (nic || wifi)
 			else
 				result = key.prefix + (wifi || nic)
+			if (result == key.prefix || (!nic && !wifi))
+				result = ''
 		}
 	}
 
