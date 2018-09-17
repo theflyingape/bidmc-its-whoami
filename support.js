@@ -206,8 +206,8 @@ function loadAsset(data) {
 		let dns = document.getElementById('dns');
 		fetch(`${CROSBY}hostname/?asset_id=${data.annotatedAssetId}`, { method: 'GET', headers: headers, mode: 'cors' }).then(function (res) {
 			return res.json().then(function (data) {
-				device.value = data.ip;
-				if (device.hosts) device.value += '\n' + data.hosts.toString();
+				dns.value = data.ip;
+				if (data.hosts) dns.value += '\n' + data.hosts.toString();
 			})
 		}).catch(function (err) {
 			dns.value = err.message
