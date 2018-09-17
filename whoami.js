@@ -36,8 +36,17 @@ function init() {
     let device = document.getElementById('deviceId');
     if (chrome.enterprise) {
       chrome.enterprise.deviceAttributes.getDirectoryDeviceId(deviceId => {
-        device.innerText = 'Chrome device ID: ';
-        device.innerText += deviceId || '(BYOD - G Suite user)';
+        device.innerHTML = 'Chrome device ID: ';
+        device.innerHMTL += deviceId || '(BYOD - G Suite user)';
+        chrome.enterprise.deviceAttributes.getDeviceSerialNumber(sn => {
+          device.innerHTML += '<br>Serial Number: ' + sn;
+          chrome.enterprise.deviceAttributes.getDeviceAssetId(assetId => {
+            device.innerHTML += '<br>Asset ID: ' + (assetId || '(empty)');
+            chrome.enterprise.deviceAttributes.getDeviceAnnotatedLocation(location => {
+              if (location) device.innerHTML += ' - ' + location;
+            });
+          });
+        });
       });
     }
     else {
