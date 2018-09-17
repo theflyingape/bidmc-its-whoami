@@ -12,7 +12,7 @@
 // draft
 
 const DEBUG = false;
-const CROSBY = DEBUG ? 'https://rhurst-laptop.bidmc.harvard.edu:3333/crosby/' : 'https://crosby.bidmc.org/crosby/';
+const CROSBY = DEBUG ? 'http://rhurst-laptop.bidmc.harvard.edu:3333/crosby/' : 'https://crosby.bidmc.org/crosby/';
 let headers = new Headers();
 //headers.append('Content-Type', 'application/json');
 
@@ -201,6 +201,18 @@ function loadAsset(data) {
 	document.getElementById("patchButton").disabled = true;
 	document.getElementById("moveButton").disabled = true;
 	document.getElementsByName("reboot")[0].hidden = true;
+
+	if (data.annotatedAssetId) {
+		let dns = document.getElementById('dns');
+		fetch(`${CROSBY}hostname/?asset_id=${data.annotatedAssetId}`, { method: 'GET', headers: headers, mode: 'cors' }).then(function (res) {
+			return res.json().then(function (data) {
+				device.value = data.ip;
+				if (device.hosts) device.value += '\n' + data.hosts.toString();
+			})
+		}).catch(function (err) {
+			dns.value = err.message
+		})
+	}
 }
 
 function findAssetBydeviceId() {

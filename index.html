@@ -144,9 +144,11 @@
   <p><b>- Notes -</b><br><textarea rows=3 cols=80 name="notes"></textarea></p>
   <form id="moveTo">
       <label for="toOU">New OU:</label><select id="toOU"></select> <button type="submit" id ="moveButton" disabled>MOVE</button>
+      <label name="reboot" style="color:red;" hidden><b>* reboot required</b></label>
       <br>
-      <label for="annotatedAssetId">Asset ID (DHCP hostname):</label><input type="text" style="color:blue;" name="annotatedAssetId" size=31><input type="image" src="assets/query.png" width="32" height="24" align="absmiddle" id="assetIdButton" title="search by our assigned hostname"> <label name="reboot" style="color:red;" hidden><b>* reboot required</b></label>
-      </form>
+      <label for="annotatedAssetId">Asset ID:</label><input type="text" style="color:blue;" name="annotatedAssetId" size=31><input type="image" src="assets/query.png" width="32" height="24" align="absmiddle" id="assetIdButton" title="search by our assigned hostname">
+      <textarea name="dns" readonly rows=1 cols=40 style="color:rebeccapurple; resize:none;"></textarea>
+  </form>
   </div>
 </div>
 <hr>
