@@ -36,14 +36,14 @@ function init() {
     let device = document.getElementById('deviceId');
     if (chrome.enterprise) {
       chrome.enterprise.deviceAttributes.getDirectoryDeviceId(deviceId => {
-        device.innerHTML = 'Chrome device ID: ';
-        device.innerHMTL += deviceId || '(BYOD - G Suite user)';
+        device.value = 'Chrome device ID: ';
+        device.value += deviceId || '(BYOD - G Suite user)';
         chrome.enterprise.deviceAttributes.getDeviceSerialNumber(sn => {
-          device.innerHTML += '<br>Serial Number: ' + sn;
+          device.value += '\nSerial Number: ' + sn;
           chrome.enterprise.deviceAttributes.getDeviceAssetId(assetId => {
-            device.innerHTML += '<br>Asset ID: ' + (assetId || '(empty)');
+            device.value += '\nAsset ID: ' + (assetId || '(empty)');
             chrome.enterprise.deviceAttributes.getDeviceAnnotatedLocation(location => {
-              if (location) device.innerHTML += ' - ' + location;
+              if (location) device.value += ' - ' + location;
             });
           });
         });
@@ -51,7 +51,7 @@ function init() {
     }
     else {
       runtime.getPlatformInfo(function(info) {
-        device.innerText = 'Chrome runtime on ' + info.os + ' ' + info.arch;
+        device.value = 'Chrome runtime on ' + info.os + ' ' + info.arch;
       });
     }
   }

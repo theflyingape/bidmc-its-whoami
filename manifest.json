@@ -1,7 +1,7 @@
 {
  "name": "BIDMC ITS: Who Am I",
  "short_name": "Who Am I",
- "version": "1.2.0",
+ "version": "1.2.1",
  "content_security_policy": "script-src 'self' *.bidmc.harvard.edu;",
  "permissions": [
    "enterprise.deviceAttributes",
