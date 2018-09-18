@@ -147,14 +147,14 @@
       <label name="reboot" style="color:red;" hidden><b>* reboot required</b></label>
       <br>
       <label for="annotatedAssetId">Asset ID:</label><input type="text" style="color:blue;" name="annotatedAssetId" size=31><input type="image" src="assets/query.png" width="32" height="24" align="absmiddle" id="assetIdButton" title="search by our assigned hostname">
-      <textarea id="dns" readonly rows=1 cols=40 style="color:rebeccapurple; resize:none;"></textarea>
+      <label id="dns" size=16 style="color:rebeccapurple;" title="DNS resolve for Asset ID"></label>
   </form>
   </div>
 </div>
 <hr>
 <div>
-  <span style='float:left; font-size:medium; color: rebeccapurple'>
-    <textarea id="deviceId" readonly rows=3 cols=80 style='resize:none;'></textarea>
+  <span style='float:left;'>
+    <textarea id="deviceId" readonly rows=3 cols=74 style='font-size:medium; color: rebeccapurple; resize:none;'></textarea>
   </span>
   <span style='float:right; font-size:small; color:slategray'>
     <label for="FieldSupport">IS Field Support tech</label>

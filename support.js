@@ -1,5 +1,7 @@
 // BIDMC ITS: Who Am I for Field and Support teams
 //
+// 18-Sep-2018 rhurst
+// ASUS Chrome Box 3 install: v1.2.3
 // 23-Aug-2018 rhurst
 // Chrome deployment: v1.1.6
 // 28-Jun-2018 rhurst
@@ -202,16 +204,20 @@ function loadAsset(data) {
 	document.getElementById("moveButton").disabled = true;
 	document.getElementsByName("reboot")[0].hidden = true;
 
+	let dns = document.getElementById('dns');
 	if (data.annotatedAssetId) {
-		let dns = document.getElementById('dns');
 		fetch(`${CROSBY}hostname/?asset_id=${data.annotatedAssetId}`, { method: 'GET', headers: headers, mode: 'cors' }).then(function (res) {
 			return res.json().then(function (data) {
-				dns.value = data.ip;
-				if (data.hosts) dns.value += '\n' + data.hosts.toString();
+				dns.innerText = data.ip ? data.ip : 'empty DNS lookup';
+				dns.title = data.hosts ? data.hosts.toString() : '(empty reverse DNS)';
 			})
 		}).catch(function (err) {
-			dns.value = err.message
+			dns.innerText = err.message
 		})
+	}
+	else {
+		dns.innerText = '...';
+		dns.title = 'DNS resolve for Asset ID';
 	}
 }
 
