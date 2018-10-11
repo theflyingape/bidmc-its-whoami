@@ -40,7 +40,6 @@ document.getElementById("nicAddressButton").addEventListener("click", findAssetB
 document.getElementById("wifiAddressButton").addEventListener("click", findAssetBywifiAddress);
 document.getElementById("assetIdButton").addEventListener("click", findAssetByannotatedAssetId);
 
-//document.getElementsByName("annotatedAssetId")[0].addEventListener("change", () => { document.getElementById("patchButton").disabled = false; });
 document.getElementsByName("annotatedLocation")[0].addEventListener("change", () => { document.getElementById("patchButton").disabled = false; });
 document.getElementsByName("annotatedUser")[0].addEventListener("change", () => { document.getElementById("patchButton").disabled = false; });
 document.getElementsByName("notes")[0].addEventListener("change", () => { document.getElementById("patchButton").disabled = false; });
@@ -52,6 +51,8 @@ document.getElementById("toOU").addEventListener("change", () => {
 	document.getElementsByName("reboot")[0].hidden = false;
 });
 document.getElementById("moveTo").addEventListener("submit", moveTo);
+
+//document.getElementsByName("annotatedAssetId")[0].addEventListener("change", () => { document.getElementById("patchButton").disabled = false; });
 
 function toggleUI()
 {
@@ -295,6 +296,7 @@ function findAssetBywifiAddress() {
 
 function findAssetByannotatedAssetId() {
 	let annotatedAssetId = document.getElementsByName("annotatedAssetId")[0].value;
+	loadAsset({});
 	if (annotatedAssetId) {
 		wait();
 		fetch(`${CROSBY}devices/?asset_id=${annotatedAssetId}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
@@ -303,9 +305,6 @@ function findAssetByannotatedAssetId() {
 				loadAsset(data[0]);
 			})
 		}).catch(function (err) { fail(); })
-	}
-	else {
-		loadAsset({});
 	}
 }
 
