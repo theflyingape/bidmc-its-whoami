@@ -1,5 +1,7 @@
 // BIDMC ITS: Who Am I for Field and Support teams
 //
+// 11-Oct-2018 rhurst
+// UI corrections
 // 18-Sep-2018 rhurst
 // ASUS Chrome Box 3 install: v1.2.3
 // 23-Aug-2018 rhurst
@@ -26,6 +28,8 @@ let info = document.getElementById("info");
 let status = document.getElementById("status");
 let work = document.getElementById("work");
 let tech = document.getElementById("tech");
+
+let loaded = true;
 
 document.getElementById("FieldSupport").addEventListener("change", toggleUI);
 document.getElementById("authorize").addEventListener("submit", authorize);
@@ -180,6 +184,7 @@ function loadOU() {
 }
 
 function loadAsset(data) {
+	loaded = true;
 	document.getElementsByName('key')[0].value = data.deviceId || '';
 	document.getElementsByName('orgUnitPath')[0].value = data.orgUnitPath || '';
 	document.getElementsByName('model')[0].value = data.model || '';
@@ -233,6 +238,9 @@ function findAssetBydeviceId() {
 			})
 		}).catch(function (err) { fail(); })
 	}
+	else {
+		loadAsset({});
+	}
 }
 
 //	http://support.google.com/chromeos/a/bin/answer.py?hl=en&answer=1698333
@@ -243,9 +251,12 @@ function findAssetByserialNumber() {
 		fetch(`${CROSBY}devices/?id=${serialNumber}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
 			return res.json().then(function (data) {
-				loadAsset(data);
+				loadAsset(data[0]);
 			})
 		}).catch(function (err) { fail(); })
+	}
+	else {
+		loadAsset({});
 	}
 }
 
@@ -256,9 +267,12 @@ function findAssetBynicAddress() {
 		fetch(`${CROSBY}devices/?ethernet_mac=${macAddress}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
 			return res.json().then(function (data) {
-				loadAsset(data);
+				loadAsset(data[0]);
 			})
 		}).catch(function (err) { fail(); })
+	}
+	else {
+		loadAsset({});
 	}
 }
 
@@ -269,9 +283,12 @@ function findAssetBywifiAddress() {
 		fetch(`${CROSBY}devices/?wifi_mac=${macAddress}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
 			return res.json().then(function (data) {
-				loadAsset(data);
+				loadAsset(data[0]);
 			})
 		}).catch(function (err) { fail(); })
+	}
+	else {
+		loadAsset({});
 	}
 }
 
@@ -282,9 +299,12 @@ function findAssetByannotatedAssetId() {
 		fetch(`${CROSBY}devices/?asset_id=${annotatedAssetId}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
 			return res.json().then(function (data) {
-				loadAsset(data);
+				loadAsset(data[0]);
 			})
 		}).catch(function (err) { fail(); })
+	}
+	else {
+		loadAsset({});
 	}
 }
 
@@ -352,8 +372,11 @@ function namingConvention() {
 
 	let annotatedAssetId = document.getElementsByName('annotatedAssetId')[0].value.toUpperCase();
 	//.replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")
-	if (result != annotatedAssetId) {
+	if (result != annotatedAssetId && !loaded) {
 		document.getElementsByName('annotatedAssetId')[0].value = result;
 		document.getElementsByName("reboot")[0].hidden = false;
+	}
+	else {
+		loaded = false;
 	}
 }
