@@ -230,7 +230,8 @@ function loadAsset(data) {
 
 function findAssetBydeviceId() {
 	let deviceId = document.getElementsByName("key")[0].value;
-	if (deviceId) {
+	loadAsset({});
+	if (deviceId.length > 2) {
 		wait();
 		fetch(`${CROSBY}device/?id=${deviceId}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
@@ -240,15 +241,13 @@ function findAssetBydeviceId() {
 			})
 		}).catch(function (err) { fail(); })
 	}
-	else {
-		loadAsset({});
-	}
 }
 
 //	http://support.google.com/chromeos/a/bin/answer.py?hl=en&answer=1698333
 function findAssetByserialNumber() {
 	let serialNumber = document.getElementsByName("serialNumber")[0].value;
-	if (serialNumber) {
+	loadAsset({});
+	if (serialNumber.length > 2) {
 		wait();
 		fetch(`${CROSBY}devices/?id=${serialNumber}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
@@ -257,14 +256,12 @@ function findAssetByserialNumber() {
 			})
 		}).catch(function (err) { fail(); })
 	}
-	else {
-		loadAsset({});
-	}
 }
 
 function findAssetBynicAddress() {
 	let macAddress = document.getElementsByName("nicAddress")[0].value.replace(/:/g,'').toLowerCase();
-	if (macAddress) {
+	loadAsset({});
+	if (macAddress.length > 2) {
 		wait();
 		fetch(`${CROSBY}devices/?ethernet_mac=${macAddress}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
@@ -273,14 +270,12 @@ function findAssetBynicAddress() {
 			})
 		}).catch(function (err) { fail(); })
 	}
-	else {
-		loadAsset({});
-	}
 }
 
 function findAssetBywifiAddress() {
 	let macAddress = document.getElementsByName("wifiAddress")[0].value.replace(/:/g,'').toLowerCase();
-	if (macAddress) {
+	loadAsset({});
+	if (macAddress.length > 2) {
 		wait();
 		fetch(`${CROSBY}devices/?wifi_mac=${macAddress}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
@@ -289,15 +284,12 @@ function findAssetBywifiAddress() {
 			})
 		}).catch(function (err) { fail(); })
 	}
-	else {
-		loadAsset({});
-	}
 }
 
 function findAssetByannotatedAssetId() {
 	let annotatedAssetId = document.getElementsByName("annotatedAssetId")[0].value;
 	loadAsset({});
-	if (annotatedAssetId) {
+	if (annotatedAssetId.length > 2) {
 		wait();
 		fetch(`${CROSBY}devices/?asset_id=${annotatedAssetId}`, { method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
