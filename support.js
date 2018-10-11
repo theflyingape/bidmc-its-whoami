@@ -197,6 +197,7 @@ function loadAsset(data) {
 	document.getElementsByName('notes')[0].value = data.notes || '';
 
 	let el = document.getElementById('toOU');
+	el.selectedIndex = -1;
 	for (let i = 0; i < el.length; i++)
 		if (el[i].text == data.orgUnitPath)
 			el.selectedIndex = i;
@@ -372,11 +373,9 @@ function namingConvention() {
 
 	let annotatedAssetId = document.getElementsByName('annotatedAssetId')[0].value.toUpperCase();
 	//.replace(/[^\w\s]|_/g, "").replace(/\s+/g, "")
-	if (result != annotatedAssetId && !loaded) {
+	if (result != annotatedAssetId) {
 		document.getElementsByName('annotatedAssetId')[0].value = result;
-		document.getElementsByName("reboot")[0].hidden = false;
-	}
-	else {
+		document.getElementsByName("reboot")[0].hidden = loaded;
 		loaded = false;
 	}
 }
