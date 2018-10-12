@@ -7,7 +7,7 @@
     height: 100%;
   }
   body {
-    background: linear-gradient(to bottom right, lightgoldenrodyellow, gold);
+    background: linear-gradient(to bottom right, aliceblue, skyblue);
     font-family: Consolas, 'Lucida Console', monospace;
     font-size: 90%;
     color: black;
@@ -149,8 +149,10 @@
   </form>
 </tr>
 <tr>
-  <td colspan="5"><b>- Notes -</b><br><textarea rows=3 cols=80 name="notes"></textarea></td>
-  <td><button type="submit" id="patchButton" title="update annotated fields: user, location, notes" disabled>PATCH</button></td>
+  <td class="field"><label for="notes"><b>Notes:</b></label></td><td class="input" colspan="5"><textarea rows=3 cols=80 name="notes"></textarea></td>
+</tr>
+<tr>
+  <td colspan="6"><button type="submit" id="patchButton" title="update annotated fields: user, location, notes" disabled>PATCH</button></td>
 </tr>
 <tr>
   <form id="moveTo">
