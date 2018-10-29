@@ -142,11 +142,10 @@
   <td class="field"><label for="wifiAddress">Wifi:</label></td><td class="input" nowrap><input type="text" style="color:blue;" name="wifiAddress" size=12><input type="image" src="assets/query.png" width="24" height="24" align="absmiddle" id="wifiAddressButton" title="search by Wireless hardware"></td>
   <td class="field"><label for="osVersion">OS:</label></td><td class="input"><input type="text" name="osVersion" readonly size=9></td>
 </tr>
+<form id="patch">
 <tr>
-  <form id="patch">
     <td class="field"><label for="annotatedUser"><b>User:</b></label></td><td class="input"><input type="text" name="annotatedUser" size=36></td>
     <td class="field"><label for="annotatedLocation"><b>Location:</b></label></td><td class="input" colspan="3"><input type="text" name="annotatedLocation" size=44></td>
-  </form>
 </tr>
 <tr>
   <td class="field"><label for="notes"><b>Notes:</b></label></td><td class="input" colspan="5"><textarea rows=3 cols=80 name="notes"></textarea></td>
@@ -154,6 +153,7 @@
 <tr>
   <td colspan="6"><button type="submit" id="patchButton" title="update annotated fields: user, location, notes" disabled>PATCH</button></td>
 </tr>
+</form>
 <tr>
   <form id="moveTo">
     <td class="field"><label for="toOU">New OU:</label></td><td class="input" colspan="5"><select id="toOU"></select> <button type="submit" id ="moveButton" disabled>MOVE</button> <label name="reboot" style="color:red;" hidden><b>* reboot required</b></label></td>

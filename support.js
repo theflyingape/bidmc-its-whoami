@@ -327,7 +327,7 @@ function patch() {
 		let annotatedUser = document.getElementsByName('annotatedUser')[0].value;
 		let notes = document.getElementsByName('notes')[0].value;
 
-		fetch(`${CROSBY}patch/?id=${deviceId}&annotatedAssetId=${annotatedAssetId}&annotatedLocation=${annotatedLocation}&annotatedUser=${annotatedUser}&notes=${notes}`,
+		fetch(`${CROSBY}patch/?id=${deviceId}&annotatedAssetId=${encodeURIComponent(annotatedAssetId)}&annotatedLocation=${encodeURIComponent(annotatedLocation)}&annotatedUser=${encodeURIComponent(annotatedUser)}&notes=${encodeURIComponent(notes)}`,
 		{ method: 'POST', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 			light(res.ok);
 			return res.json().then(function (data) {
@@ -346,6 +346,12 @@ function namingConvention() {
 	let ou = '';
 	if (el.selectedIndex >= 0)
 		ou = el[el.selectedIndex].text;	//	.value "fails" if it has a leading "0", go figure
+	else {
+		ou = document.getElementsByName('orgUnitPath')[0].value
+		for (let i = 0; i < el.length; i++)
+			if (el[i].text == data.orgUnitPath)
+				el.selectedIndex = i;
+	}
 	if (ou) {
 		let keys = Object.keys(gcbyou).sort();
 		let key = ''
