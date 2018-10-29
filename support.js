@@ -348,9 +348,10 @@ function namingConvention() {
 		ou = el[el.selectedIndex].text;	//	.value "fails" if it has a leading "0", go figure
 	else {
 		ou = document.getElementsByName('orgUnitPath')[0].value
-		for (let i = 0; i < el.length; i++)
-			if (el[i].text == data.orgUnitPath)
-				el.selectedIndex = i;
+		if (ou)
+			for (let i = 0; i < el.length; i++)
+				if (el[i].text == ou)
+					el.selectedIndex = i;
 	}
 	if (ou) {
 		let keys = Object.keys(gcbyou).sort();
