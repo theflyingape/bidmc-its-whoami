@@ -54,9 +54,8 @@
 </style>
 </head>
 <body>
-<img src="./assets/BIDMC.png" width="50%" style="float:left; margin:4px 20px 4px 20px; border:none;">
+<img src="./assets/bidmc.png" width="50%" style="float:left; margin:4px 20px 4px 20px; border:none;">
 <pre style="font-size:large;">
-
 |
 |  Please use this tool when calling
 |  IS Support Center at 4-8080
@@ -114,20 +113,21 @@
   ITS support teams
 -->
 <div id="tech" style='text-align: right;' hidden>
-  <p style="border-style: double; text-align: center;">
-    This application section allows only authorized personnel use.<br>
-    Any unauthorized attempts are logged and monitored.
-  </p>
-  <form id="authorize">
-    <fieldset id="logon">
-    <input type="text" placeholder="Enter ID" name="id" autofocus required>
-    <input type="password" placeholder="Enter password" name="password" required>
-    <button type="submit"> Authorize </button>
-    <img src="assets/yellow_light.png" width="24" height="24" align="absmiddle" id="status" title="use ITS credentials in AD-Add Workstation to Domain group">
-    </fieldset>
-  </form>
+<table>
+<tr>
+<td style="text-align: left;"><form id="authorize"><fieldset id="logon">
+  <input type="text" placeholder="Enter ID" name="id" size=16 autofocus required><br>
+  <input type="password" placeholder="Enter password" name="password" size=16 required>
+  <button type="submit"> Authorize </button>
+  <img src="assets/yellow_light.png" width="24" height="24" align="absmiddle" id="status" title="use ITS credentials in AD-Add Workstation to Domain group">
+</fieldset></form></td>
+<td style="border-style: double; text-align: center;">
+  This application section allows only authorized personnel use.<br>
+  Any unauthorized attempts are logged and monitored.
+</td>
+</tr>
+</table>
 <div id="work" style='text-align: center;' hidden>
-  <p id="device" style="border-style: single; text-align: center;">-missing-</p>
 <table>
 <tr>
   <td class="field"><label for="key">Device ID:</label></td><td class="input" nowrap><input type="text" style="color:blue;" name="key" size=36><input type="image" src="assets/query.png" width="24" height="24" align="absmiddle" id="keyButton" title="search by device enrollment id"></td>

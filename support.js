@@ -1,5 +1,10 @@
 // BIDMC ITS: Who Am I for Field and Support teams
+// https://chrome.google.com/webstore/detail/bidmc-its-who-am-i/njjibjhkpfiaeggeapoahigncabpcbap
 //
+// 21-May-2019 rhurst
+// added "sn" attribute for DHCP naming construction (TechDev does not use AssetID)
+// 14-Mar-2019 rhurst
+// properly load this asset OU in picklist, account for Asset IDs in TechDev OU
 // 11-Oct-2018 rhurst
 // UI corrections
 // 18-Sep-2018 rhurst
@@ -16,13 +21,14 @@
 // draft
 
 const DEBUG = false;
-const CROSBY = DEBUG ? 'http://rhurst-laptop.bidmc.harvard.edu:3333/crosby/' : 'https://crosby.bidmc.org/crosby/';
+const CROSBY = DEBUG ? 'http://8ball.bidmc.harvard.edu:3333/crosby/' : 'https://crosby.bidmc.org/crosby/';
 let headers = new Headers();
 //headers.append('Content-Type', 'application/json');
 
-let gcbyou = { '/': { nic:1, wifi:2  } };
+let gcbyou = { '/': { nic:1, wifi:2, sn:99 } };
 let nic = '';
 let wifi = '';
+let sn = '';
 
 let info = document.getElementById("info");
 let status = document.getElementById("status");
@@ -114,41 +120,18 @@ function authorize()
 	headers.append('Authorization', 'Basic ' + btoa(username + ":" + password));
 	loadOU();
 
-	let device = document.getElementById('device');
 	if (chrome.enterprise) {
 		chrome.enterprise.deviceAttributes.getDirectoryDeviceId(deviceId => {
-			device.innerText = 'Chrome Enterprise enrollment: ';
-			device.innerText += deviceId || 'n/a';
 			if (deviceId) {
 				fetch(`${CROSBY}device/?id=${deviceId}`, { method: 'GET', headers: headers, mode: 'cors' }).then(function (res) {
 					light(res.ok);
 					return res.json().then(function (data) {
-						device.innerText += ' ' + (data.status || 'unknown');
 						loadAsset(data);
 					})
 				}).catch(function (err) { fail(); })
 			}
 		});
 	}
-	else {
-		device.innerText = '- THIS DEVICE is NOT enrolled -';
-	}
-	/*
-	chrome.app.window.create(
-		'webview.html',
-		{ hidden: true, innerBounds: { height:600, width:800 } },   // only show window when webview is configured
-		function(appWin) {
-		  appWin.contentWindow.addEventListener('DOMContentLoaded',
-			function(e) {
-			  // when window is loaded, set webview source
-			  var webview = appWin.contentWindow.document.querySelector('webview');
-			  webview.src = "https://www.google.com";
-			  // now we can show it:
-			  appWin.show();
-			}
-		);
-	});
-	*/
 }
 
 function loadOU() {
@@ -175,7 +158,7 @@ function loadOU() {
 	fetch(`${CROSBY}gc-by-ou.json`,
 	{ method: 'GET', headers: headers, credentials: 'same-origin', mode: 'cors' }).then(function (res) {
 		return res.json().then(function (data) {
-			console.log(data);
+//			console.log(data);
 			Object.assign(gcbyou, data);
 		})
 	}).catch(function (err) {
@@ -206,7 +189,8 @@ function loadAsset(data) {
 	document.getElementsByName('annotatedAssetId')[0].value = data.annotatedAssetId || '';
 	nic = document.getElementsByName("nicAddress")[0].value.replace(/:/g,'').toUpperCase();
 	wifi = document.getElementsByName("wifiAddress")[0].value.replace(/:/g,'').toUpperCase();
-
+	sn = document.getElementsByName("serialNumber")[0].value.replace(/:/g,'').toUpperCase();
+	
 	document.getElementById("patchButton").disabled = true;
 	document.getElementById("moveButton").disabled = true;
 	document.getElementsByName("reboot")[0].hidden = true;
@@ -340,7 +324,7 @@ function patch() {
 // assert our naming convention
 function namingConvention() {
 	//	Google Chrome + MAC address
-	let result = 'GC-' + (nic || wifi);
+	let result = 'GC-' + (nic || wifi || sn || 'restart');
 
 	let el = document.getElementById('toOU');
 	let ou = '';
@@ -360,11 +344,13 @@ function namingConvention() {
 			if (ou.startsWith(k)) key = gcbyou[k]
 		});
 		if (key) {
+			if (key.sn && (key.sn < key.wifi && key.sn < key.nic))
+				result = key.prefix + sn
 			if (key.nic < key.wifi)
-				result = key.prefix + (nic || wifi)
+				result = key.prefix + (nic || wifi || sn)
 			else
-				result = key.prefix + (wifi || nic)
-			if (result == key.prefix || (!nic && !wifi))
+				result = key.prefix + (wifi || nic || sn)
+			if (result == key.prefix || (!nic && !wifi && !sn))
 				result = ''
 		}
 	}
