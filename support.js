@@ -346,7 +346,7 @@ function namingConvention() {
 		if (key) {
 			if (key.sn && (key.sn < key.wifi && key.sn < key.nic))
 				result = key.prefix + sn
-			if (key.nic < key.wifi)
+			else if (key.nic < key.wifi)
 				result = key.prefix + (nic || wifi || sn)
 			else
 				result = key.prefix + (wifi || nic || sn)
