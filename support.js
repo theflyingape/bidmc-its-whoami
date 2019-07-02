@@ -199,8 +199,8 @@ function loadAsset(data) {
 	if (data.annotatedAssetId) {
 		fetch(`${CROSBY}hostname/?asset_id=${data.annotatedAssetId}`, { method: 'GET', headers: headers, mode: 'cors' }).then(function (res) {
 			return res.json().then(function (data) {
-				dns.innerText = data.ip ? data.ip : 'empty DNS lookup';
-				dns.title = data.hosts ? data.hosts.toString() : '(empty reverse DNS)';
+				dns.innerText = data.ip ? data.ip : '...';
+				dns.innerText += data.hosts ? ' - ' + data.hosts.toString() : ' (empty reverse DNS)';
 			})
 		}).catch(function (err) {
 			dns.innerText = err.message
@@ -208,7 +208,6 @@ function loadAsset(data) {
 	}
 	else {
 		dns.innerText = '...';
-		dns.title = 'DNS resolve for Asset ID';
 	}
 }
 

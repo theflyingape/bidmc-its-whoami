@@ -19,8 +19,11 @@
     background-image: linear-gradient(to left, gainsboro, black, gainsboro);
     border: 0;
     height: 1px;
-    width: 80%;
+    width: 90%;
   }
+  .red { background-image: linear-gradient(to left, #ffa0a0, firebrick, #ffa0a0); }
+  .blue { background-image: linear-gradient(to left, lightskyblue, cornflowerblue, lightskyblue); }
+
 /*
     http://divtable.com/table-styler/
 */
@@ -148,30 +151,30 @@ our IS Support Center at 4-8080
   <td class="field"><label for="wifiAddress">Wifi:</label></td><td class="input" nowrap><input type="text" style="color:blue;" name="wifiAddress" size=12><input type="image" src="assets/query.png" width="24" height="24" align="absmiddle" id="wifiAddressButton" title="search by Wireless hardware"></td>
   <td class="field"><label for="osVersion">OS:</label></td><td class="input"><input type="text" name="osVersion" readonly size=9></td>
 </tr>
-<tr><td colspan="6"><hr></td></tr>
+<tr><td colspan="6"><hr class="red"></td></tr>
 <form id="patch">
 <tr>
-    <td class="field"><label for="annotatedUser"><b>User:</b></label></td><td class="input"><input type="text" name="annotatedUser" size=36></td>
-    <td class="field"><label for="annotatedLocation"><b>Location:</b></label></td><td class="input" colspan="3"><input type="text" name="annotatedLocation" size=44></td>
+    <td class="field"><label for="annotatedUser" style="color:red;">User:</label></td><td class="input"><input type="text" name="annotatedUser" size=36></td>
+    <td class="field"><label for="annotatedLocation" style="color:red;">Location:</label></td><td class="input" colspan="3"><input type="text" name="annotatedLocation" size=44></td>
 </tr>
 <tr>
-  <td class="field"><label for="notes"><b>Notes:</b></label></td><td class="input" colspan="4"><textarea rows=3 cols=80 name="notes"></textarea></td>
+  <td class="field"><label for="notes" style="color:red;">Notes:</label></td><td class="input" colspan="4"><textarea rows=3 cols=80 name="notes"></textarea></td>
   <td><button type="submit" id="patchButton" title="update annotated fields: user, location, notes" disabled>PATCH</button></td>
 </tr>
 </form>
 <tr>
   <form id="moveTo">
-    <td class="field"><label for="toOU">New OU:</label></td><td class="input" colspan="5"><select id="toOU"></select> <button type="submit" id ="moveButton" disabled>MOVE</button> <label name="reboot" style="color:red;" hidden><b>* reboot required</b></label></td>
+    <td class="field"><label for="toOU">New OU:</label></td><td class="input" colspan="5"><select id="toOU"></select> <button type="submit" id ="moveButton" title="assign device policy and profile" disabled>MOVE</button> <label name="reboot" style="color:red;" hidden><b>* restart required</b></label></td>
 </tr>
 <tr>
     <td class="field"><label for="annotatedAssetId">Asset ID:</label></td><td class="input" nowrap><input type="text" style="color:blue;" name="annotatedAssetId" size=31><input type="image" src="assets/query.png" width="24" height="24" align="absmiddle" id="assetIdButton" title="search by our assigned hostname"></td>
-    <td class="input" colspan="4"><label id="dns" size=20 style="border:ridge; color:rebeccapurple;" title="DNS resolve for Asset ID"></label></td>
+    <td class="input" colspan="4"><label id="dns" size=60 style="border:ridge; color:rebeccapurple;" title="our DNS resolve off the Asset ID">...</label></td>
   </form></td>
 </tr>
 </table>
 </div>
 </div>
-<hr>
+<hr class="blue">
 <div style='margin: auto; width: 96%;'>
   <span>
     <textarea id="deviceId" readonly rows=3 cols=80 style='font-size:larger; color:rebeccapurple; resize:none;'>
