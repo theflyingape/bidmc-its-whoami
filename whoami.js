@@ -40,6 +40,10 @@ function init() {
         device.value += deviceId || '(BYOD - G Suite user)';
         chrome.enterprise.deviceAttributes.getDeviceSerialNumber(sn => {
           device.value += '\nSerial Number: ' + sn;
+          //	load any settings associated with the app
+          chrome.storage.managed.get(function(policy) {
+            device.value += ' - ' + JSON.stringify(policy);
+          });
           chrome.enterprise.deviceAttributes.getDeviceAssetId(assetId => {
             device.value += '\nAsset ID: ' + (assetId || '(empty)');
             chrome.enterprise.deviceAttributes.getDeviceAnnotatedLocation(location => {

@@ -1,0 +1,18 @@
+{
+    "type": "object",
+    "properties": {
+        "banner": {
+            "title": "app logo & header information",
+            "description": "identify from managed asset location which banner to display",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "location": { "type": "string" },
+                    "logo": { "type": "string" },
+                    "info": { "type": "string" }
+                }
+            }
+        }
+    }
+}
