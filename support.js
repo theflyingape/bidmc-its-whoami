@@ -1,8 +1,6 @@
 // BIDMC ITS: Who Am I for Field and Support teams
 // https://chrome.google.com/webstore/detail/bidmc-its-who-am-i/njjibjhkpfiaeggeapoahigncabpcbap
 //
-// 13-Aug-2019 rhurst
-// added storage.managed API to allow for customized banner logo & info based on asset location
 // 21-May-2019 rhurst
 // added "sn" attribute for DHCP naming construction (TechDev does not use AssetID)
 // 14-Mar-2019 rhurst

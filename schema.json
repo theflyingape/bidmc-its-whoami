@@ -1,15 +1,14 @@
 {
     "type": "object",
     "properties": {
-        "banner": {
-            "type": "object",
-            "additionalProperties": {
-                "type": "object",
-                "properties": {
-                    "logo": { "type": "string" },
-                    "text": { "type": "string" }
-                }
-            }
+        "bannerLogo": {
+            "type": "string"
+        },
+        "bannerText": {
+            "type": "string"
+        },
+        "showIPv6": {
+            "type": "boolean"
         }
     }
 }

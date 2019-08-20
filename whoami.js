@@ -2,11 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
+// 20-Aug-2019 rhurst
+// added storage.managed API to customize
+// banner logo & text and control over showing any IPV6
 // 05-Apr-2018 rhurst
 // BIDMC ITS version uplifted to minimum Chrome version 46.
 
 var runtime = chrome.runtime;
 var systemInfo = chrome.system;
+var showIPV6 = false;
 
 function insertRow(tableId, cells)
 {
@@ -40,10 +44,6 @@ function init() {
         device.value += deviceId || '(BYOD - G Suite user)';
         chrome.enterprise.deviceAttributes.getDeviceSerialNumber(sn => {
           device.value += '\nSerial Number: ' + sn;
-          //	load any settings associated with the app
-          chrome.storage.managed.get(function(policy) {
-            device.value += ' - ' + JSON.stringify(policy);
-          });
           chrome.enterprise.deviceAttributes.getDeviceAssetId(assetId => {
             device.value += '\nAsset ID: ' + (assetId || '(empty)');
             chrome.enterprise.deviceAttributes.getDeviceAnnotatedLocation(location => {
@@ -51,6 +51,12 @@ function init() {
             });
           });
         });
+      });
+      //	fetch any settings associated with the app
+      chrome.storage.managed.get(function(policy) {
+        if (policy.bannerLogo) document.getElementById('logo').setAttribute('src', policy.bannerLogo);
+        if (policy.bannerText) document.getElementById('text').setAttribute('src', policy.bannerText);
+        if (policy.showIPV6) showIPV6 = policy.showIPV6;
       });
     }
     else {
@@ -66,7 +72,8 @@ function init() {
   (function getNetworkInfo() {
     systemInfo.network.getNetworkInterfaces(function(nics) {
       nics.forEach(function(nic, index) {
-        insertRow('network-table', [ nic.name, nic.address ]);
+        if (showIPV6 || !nic.address.includes('::'))
+          insertRow('network-table', [ nic.name, nic.address ]);
       });
     });
   })();
