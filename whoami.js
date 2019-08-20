@@ -10,7 +10,7 @@
 
 var runtime = chrome.runtime;
 var systemInfo = chrome.system;
-var showIPV6 = false;
+var showIPv6 = false;
 
 function insertRow(tableId, cells)
 {
@@ -54,14 +54,16 @@ function init() {
       });
       //	fetch any settings associated with the app
       chrome.storage.managed.get(function(policy) {
-        if (policy.bannerLogo) document.getElementById('logo').setAttribute('src', policy.bannerLogo);
-        if (policy.bannerText) document.getElementById('text').setAttribute('src', policy.bannerText);
-        if (policy.showIPV6) showIPV6 = policy.showIPV6;
+        if (policy.bannerLogo) document.getElementById('logo').setAttribute('src', `./assets/${policy.bannerLogo}`);
+        if (policy.bannerText) document.getElementById('text').innerText = policy.bannerText;
+        if (policy.showIPv6) showIPv6 = policy.showIPv6;
       });
     }
     else {
       runtime.getPlatformInfo(function(info) {
         device.value = 'Chrome runtime on ' + info.os + ' ' + info.arch;
+        document.getElementById('logo').setAttribute('src', './assets/bilh.png');
+        document.getElementById('text').innerText = ' ** \n ** \n ** Developer Mode ** \n ** ';
       });
     }
   }
@@ -72,7 +74,7 @@ function init() {
   (function getNetworkInfo() {
     systemInfo.network.getNetworkInterfaces(function(nics) {
       nics.forEach(function(nic, index) {
-        if (showIPV6 || !nic.address.includes('::'))
+        if (showIPv6 || !nic.address.includes('::'))
           insertRow('network-table', [ nic.name, nic.address ]);
       });
     });
